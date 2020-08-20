@@ -46,11 +46,11 @@ regression_slide <- df %>% select(-lengths_um) %>% filter(annotation_types == "T
 write.csv(regression_slide, regression_slide_fn, row.names=FALSE)
 
 # Tumor regression by tumor
-regression_tumor <- regression_slide %>% group_by(ids, tumors) %>% summarise(avg_percent = mean(percents))
+regression_tumor <- regression_slide %>% group_by(ids, tumors) %>% summarise(avg_percent = round(mean(percents), 2))
 
 write.csv(regression_tumor, regression_tumor_fn, row.names=FALSE)
 
 # Tumor regression by probe - summarizing the regression in every slide (not by tumors, to diminish bias by tumor size)
-regression_probe <- regression_slide %>% group_by(ids) %>% summarise(avg_percent = mean(percents))
+regression_probe <- regression_slide %>% group_by(ids) %>% summarise(avg_percent = round(mean(percents), 2))
 
 write.csv(regression_probe, regression_probe_fn, row.names=FALSE)
