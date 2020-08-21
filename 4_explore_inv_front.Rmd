@@ -15,8 +15,11 @@ library(ggplot2)
 ```{r }
 base_dir <-"/home/bibu/Workspace/crlm_cohort/output"
 gp_slide_fn <- paste(base_dir, "/gp_annotations_by_slide.csv", sep="")
+gp_tumor_fn <- paste(base_dir, "/gp_annotations_by_tumor.csv", sep="")
+gp_probe_fn <- paste(base_dir, "/gp_annotations_by_probe.csv", sep="")
 ```
 
+### GPs by slide
 ```{r }
 gp_slide <- read.csv(gp_slide_fn, row.names=NULL)
 gp_slide <- gp_slide %>% mutate(slide_name = paste(ids, tumors, blocks, sep="-"))
@@ -30,12 +33,38 @@ names(myColors) <- levels(gp_slide$annotation_types)
 colScale <- scale_colour_manual(name = "annotation_types",values = myColors)
 ```
 
-### GPs by slide
 ```{r}
 plots <- gp_slide %>% group_by(ids) %>% do( plots =
   ggplot(data = ., aes(x = slide_name, y = percent_gp, fill = annotation_types))+ geom_bar(stat="identity") + scale_fill_manual(name = "annotation_types",values = myColors) +
-    ggtitle(paste("ID:", .$ids)) + theme(plot.title = element_text(hjust = 0.5)) + guides(fill=guide_legend(title="GPs")) + facet_wrap(~ tumors, scales = "free_x")
+    ggtitle(paste("Probe:", .$ids)) + theme(plot.title = element_text(hjust = 0.5)) + guides(fill=guide_legend(title="GPs")) + facet_wrap(~ tumors, scales = "free_x")
 )
 
 for(p in plots$plots) {print(p)}
+```
+
+### GPs by tumor
+```{r }
+gp_tumor <- read.csv(gp_tumor_fn, row.names=NULL)
+gp_tumor <- gp_tumor %>% mutate(tumor_name = paste(ids, tumors, sep="-"))
+gp_tumor$annotation_types <- factor(gp_tumor$annotation_types, levels = c("P", "D","R2", "R") )
+```
+
+```{r}
+plots <- gp_tumor %>% group_by(ids) %>% do( plots =
+  ggplot(data = ., aes(x = tumor_name, y = percent_gp, fill = annotation_types))+ geom_bar(stat="identity") + scale_fill_manual(name = "annotation_types",values = myColors) +
+    ggtitle(paste("Probe:", .$ids)) + theme(plot.title = element_text(hjust = 0.5)) + guides(fill=guide_legend(title="GPs")) 
+)
+
+for(p in plots$plots) {print(p)}
+```
+
+### GPs by probe
+```{r }
+gp_probe <- read.csv(gp_probe_fn, row.names=NULL)
+gp_probe$annotation_types <- factor(gp_probe$annotation_types, levels = c("P", "D","R2", "R") )
+```
+
+```{r}
+ggplot(data = gp_probe, aes(x = ids, y = percent_gp, fill = annotation_types))+ geom_bar(stat="identity") + scale_fill_manual(name = "annotation_types",values = myColors) +
+    theme(plot.title = element_text(hjust = 0.5)) + guides(fill=guide_legend(title="GPs"))
 ```
