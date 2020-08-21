@@ -66,5 +66,5 @@ gp_probe$annotation_types <- factor(gp_probe$annotation_types, levels = c("P", "
 
 ```{r}
 ggplot(data = gp_probe, aes(x = ids, y = percent_gp, fill = annotation_types))+ geom_bar(stat="identity") + scale_fill_manual(name = "annotation_types",values = myColors) +
-    theme(plot.title = element_text(hjust = 0.5)) + guides(fill=guide_legend(title="GPs"))
+    guides(fill=guide_legend(title="GPs"))
 ```

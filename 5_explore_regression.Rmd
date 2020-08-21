@@ -1,0 +1,58 @@
+---
+title: "5_explore_regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r }
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r }
+base_dir <-"/home/bibu/Workspace/crlm_cohort/output"
+regression_slide_fn <- paste(base_dir, "/regression_by_slide.csv", sep="")
+regression_tumor_fn <- paste(base_dir, "/regression_by_tumor.csv", sep="")
+regression_probe_fn <- paste(base_dir, "/regression_by_probe.csv", sep="")
+```
+
+### Regression by slide
+```{r }
+regression_slide <- read.csv(regression_slide_fn, row.names=NULL)
+regression_slide <- regression_slide %>% mutate(slide_name = paste(ids, tumors, blocks, sep="-"))
+```
+
+```{r}
+plots <- regression_slide %>% group_by(ids) %>% do( plots =
+  ggplot(data = ., aes(x = slide_name, y = percents))+ geom_bar(stat="identity") + expand_limits(y = 100) +
+    ggtitle(paste("Probe:", .$ids)) + theme(plot.title = element_text(hjust = 0.5)) + facet_wrap(~ tumors, scales = "free_x")
+)
+
+for(p in plots$plots) {print(p)}
+```
+
+### Regression by tumor
+```{r }
+regression_tumor <- read.csv(regression_tumor_fn, row.names=NULL)
+regression_tumor <- regression_tumor %>% mutate(tumor_name = paste(ids, tumors, sep="-"))
+```
+
+```{r}
+plots <- regression_tumor %>% group_by(ids) %>% do( plots =
+  ggplot(data = ., aes(x = tumor_name, y = avg_percent))+ geom_bar(stat="identity") + expand_limits(y = 100) +
+    ggtitle(paste("Probe:", .$ids)) + theme(plot.title = element_text(hjust = 0.5)) 
+)
+
+for(p in plots$plots) {print(p)}
+```
+
+### Regression by probe
+```{r }
+regression_probe <- read.csv(regression_probe_fn, row.names=NULL)
+```
+
+```{r}
+ggplot(data = regression_probe, aes(x = ids, y = avg_percent))+ geom_bar(stat="identity") + expand_limits(y = 100)
+```
