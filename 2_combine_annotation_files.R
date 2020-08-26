@@ -14,7 +14,7 @@ df <- data.frame()
 file_list <- list.files(path = parsed_csv_dir, pattern = "*.csv")
 # Iterate csv files and combine in one large dataframe
 for (fn in file_list){
-    temp_df <-read.csv2(paste(parsed_csv_dir, "/",fn, sep=""), row.names=NULL)
+    temp_df <-read.csv(paste(parsed_csv_dir, "/",fn, sep=""), row.names=NULL, colClasses = "character") # colClasses needed to avoid conversion of blocks "F" to boolean ("FALSE")
     
     df <- rbind(df, temp_df)
 }

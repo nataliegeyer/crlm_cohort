@@ -15,7 +15,7 @@ parse_annotation_file <- function (ndpa_file) {
   fn_tokens <- unlist(str_split(ndpa_file, "-"))
   id <- fn_tokens[1]
   tumor <- fn_tokens[2]
-  block <- str_replace(fn_tokens[3], ".ndpa", "")
+  block <- str_replace(fn_tokens[3], ".ndpi.ndpa", "")
 
   print(paste("parse_annotation_file: Parsing annotation file:", ndpa_file))
   print(paste("id:", id, "; tumor:", tumor, "block:", block))
@@ -170,8 +170,8 @@ for(ndpa_file in ndpa_files) {
   print(paste("File: ", ndpa_file))
   annotation_slide_data <- parse_annotation_file(ndpa_file)
   
-  output_fn <- paste(out_dir, "/parsed_annotations/", str_replace(ndpa_file, ".ndpa", ""), ".csv", sep="")
-  write.csv2(annotation_slide_data, output_fn, row.names = FALSE, na = "")
+  output_fn <- paste(out_dir, "/parsed_annotations/", str_replace(ndpa_file, ".ndpi.ndpa", ""), ".csv", sep="")
+  write.csv(annotation_slide_data, output_fn, row.names = FALSE)
   
 } 
 
