@@ -1,5 +1,5 @@
 # Globals
-base_dir <-"/home/bibu/Workspace/crlm_cohort/output"
+base_dir <-"~/Desktop/CRLMannotations/crlm_cohort/output"
 parsed_csv_dir <- paste(base_dir, "/parsed_annotations", sep="")
 combined_fn <- paste(base_dir, "/combined_annotations.csv", sep="")
 

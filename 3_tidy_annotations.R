@@ -1,7 +1,7 @@
 library(tidyverse)
 
 # Globals
-base_dir <-"/home/bibu/Workspace/crlm_cohort/output"
+base_dir <-"~/Desktop/CRLMannotations/crlm_cohort/output"
 combined_fn <- paste(base_dir, "/combined_annotations.csv", sep="")
 
 combined_slide_fn <- paste(base_dir, "/gp_annotations_by_slide.csv", sep="")

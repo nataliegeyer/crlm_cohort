@@ -12,7 +12,7 @@ library(ggplot2)
 ```
 
 ```{r }
-base_dir <-"/home/bibu/Workspace/crlm_cohort/output"
+base_dir <-"~/Desktop/CRLMannotations/crlm_cohort/output"
 regression_slide_fn <- paste(base_dir, "/regression_by_slide.csv", sep="")
 regression_tumor_fn <- paste(base_dir, "/regression_by_tumor.csv", sep="")
 regression_probe_fn <- paste(base_dir, "/regression_by_probe.csv", sep="")
