@@ -42,6 +42,11 @@ plots <- gp_slide %>% group_by(ids) %>% do( plots =
 for(p in plots$plots) {print(p)}
 ```
 
+#### GPs by slide grouped as probes
+```{r}
+ggplot(data = gp_slide, aes(x = slide_name, y = percent_gp, fill = annotation_types))+ geom_bar(stat="identity") + scale_fill_manual(name = "annotation_types",values = myColors) + theme(axis.text.y=element_text(size = 3)) + facet_grid(rows = vars(ids), scales = "free_y", space = "free_y") + theme(axis.text.y.right=element_text(angle = -90, size = 3)) + coord_flip() + theme(strip.text.y = element_text(size = 5, angle = 0)) + theme(panel.spacing = unit(0.1, "lines"))
+```
+
 ### GPs by tumor
 ```{r }
 gp_tumor <- read.csv(gp_tumor_fn, row.names=NULL)
